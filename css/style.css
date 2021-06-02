@@ -13,18 +13,37 @@ button {
     color: inherit
 }
 
+header{
+    position: fixed;
+    top:0;
+    right:0;
+    left:0;
+    z-index: 9999;
+}
+
 section {
     max-width: 768px;
     margin: 0 auto;
 }
 
+.header-menu{
+    color:#fff;
+    display:flex;
+    padding:30px;
+    justify-content: flex-end;
+}
+
+.header-menu > li{
+    padding-left:10px;
+}
 .post {
     margin-bottom: 10px;
     padding: 30px;
+    padding-top: 80px;
     background-image: url(../images/background.jpg);
     background-size: cover;
     background-attachment: fixed;
-    min-height: 250px;
+    min-height: 300px;
     color: #fff;
     position: relative;
 }
@@ -223,7 +242,7 @@ section {
 
 
 .login-box {
-    display: flex;
+    display: none;
     position: fixed;
     z-index: 999;
     top: 0;
@@ -252,11 +271,11 @@ section {
     color: #065fd4
 }
 
-.login-btn>li {
+.login-btns>li {
     padding: 5px;
 }
 
-.login-btn>li>button {
+.login-btns>li>button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -268,24 +287,24 @@ section {
 }
 
 
-.login-btn>li>.naver-login {
+.login-btns>li>.naver-login {
     background-color: #00c300;
 }
 
-.login-btn>li>.kakao-login {
+.login-btns>li>.kakao-login {
     background-color: #fae100;
     color: #3b1d1e
 }
 
-.login-btn>li>.facebook-login {
+.login-btns>li>.facebook-login {
     background-color: #1877f2;
 }
 
-.login-btn>li>.google-login {
+.login-btns>li>.google-login {
     background-color: #4285f4;
 }
 
-.login-btn>li>.twitter-login {
+.login-btns>li>.twitter-login {
     background-color: #1da1f2;
 }
 

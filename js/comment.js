@@ -196,16 +196,6 @@ window.addEventListener('DOMContentLoaded', function () {
     newCommentInput.addEventListener('keypress', function (event) {
         event.key === 'Enter' && onSubmit()
     })
-
-    newCommentInput.addEventListener('click', function() {
-        if(!sessionStorage.getItem('loginInfo')){
-            alert('로그인 후 이용해주세요 ')
-            return false
-        }
-
-    })
-
-
     
     deleleFunction()
     editFunction()
