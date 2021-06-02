@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
     loginButtons.forEach(button => {
         button.addEventListener('click', function () {
             sessionStorage.setItem('loginInfo', button.value)
-            location.href = '/'
+            location.href = './'
         })
     })
 
@@ -39,6 +39,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
     headerLogout.addEventListener('click', function(){
         sessionStorage.removeItem('loginInfo')
-        location.href = '/'
+        location.href = './'
     })
 })
