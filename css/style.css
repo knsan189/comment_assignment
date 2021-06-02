@@ -156,13 +156,17 @@ section {
 
 .comment-list .comment-row .commit-btn {
     position: absolute;
-    display: block;
+    display: none;
     right: 1em;
     top: 1.5em;
     background: #fff;
     width: 150px;
     text-align: center;
     box-shadow: 0px 0px 6px 0px rgb(41 42 42 / 15%);
+}
+
+.comment-list .comment-row .commit-btn.active{
+    display: block;
 }
 
 .comment-list .comment-row .commit-btn>li {
