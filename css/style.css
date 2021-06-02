@@ -14,7 +14,7 @@ button {
 }
 
 header{
-    position: fixed;
+    position: absolute;
     top:0;
     right:0;
     left:0;
@@ -154,6 +154,19 @@ section {
     padding-bottom: 15px
 }
 
+.comment-list .comment-row .comment-info .comment-photo{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    border : 2px solid #ccc;
+    margin-right:10px;
+}
+
+.comment-list .comment-row .comment-info .comment-photo img{
+    width:100%;
+}
+
 .comment-list .comment-row .comment-info .comment-date {
     color: #999;
     padding-left: 10px;
@@ -169,7 +182,7 @@ section {
 .comment-list .comment-row .more-btn {
     color: #ccc;
     position: absolute;
-    top: 1em;
+    top: 1.8em;
     right: 1em;
 }
 

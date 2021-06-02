@@ -5,6 +5,12 @@ window.addEventListener('DOMContentLoaded', function () {
     const emptyBlock = document.createElement('div')
     emptyBlock.className = 'empty-block'
 
+    const userImg = (data) => {
+        switch(data){
+            case '네이버' : return './images/naver-logo.png'
+        }
+    }
+    
     const isEmtpy = () => {
         alert('내용을 입력해주세요')
     }
@@ -98,11 +104,19 @@ window.addEventListener('DOMContentLoaded', function () {
 
             const user = document.createElement('div')
             user.className = 'comment-username'
-            user.textContent = '테스트 유저'
+            user.textContent = `${sessionStorage.getItem('loginInfo')} 유저`
+            
+            const photoImg = document.createElement('img')
+            photoImg.src = userImg(sessionStorage.getItem('loginInfo'))
+            photoImg.alt = sessionStorage.getItem('loginInfo')
+
+            const photo = document.createElement('div')
+            photo.className = 'comment-photo'
+            photo.appendChild(photoImg)
 
             const commentInfo = document.createElement('div')
             commentInfo.className = 'comment-info'
-            commentInfo.append(user, date)
+            commentInfo.append(photo, user, date)
 
             const faEllipsis = document.createElement('i')
             faEllipsis.className = 'fas fa-ellipsis-h'
@@ -147,11 +161,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
             const likeBtn = document.createElement('button')
             likeBtn.className ='like-btn'
-            likeBtn.appendChild(faThumbsUp)
+            likeBtn.textContent = '0'
+            likeBtn.prepend(faThumbsUp)
 
             const dislikeBtn = document.createElement('button')
-            dislikeBtn.className ='dislike-btn'
-            dislikeBtn.appendChild(faThumbsDown)
+            dislikeBtn.className = 'dislike-btn'
+            dislikeBtn.textContent = '0'
+            dislikeBtn.prepend(faThumbsDown)
 
             const comment = document.createElement('div')
             comment.classList.add('comment-row')
