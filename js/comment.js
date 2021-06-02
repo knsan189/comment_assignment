@@ -2,6 +2,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // 금지어 목록
     const forbiddenWords = ['바보', '멍청이', '불합격', '탈락']
+    const emptyBlock = document.createElement('div')
+    emptyBlock.className = 'empty-block'
 
     const isEmtpy = () => {
         alert('내용을 입력해주세요')
@@ -38,17 +40,21 @@ window.addEventListener('DOMContentLoaded', function () {
             commentEditorCancel.textContent = '취소'
     
             commentEditor.append(textArea, commentEditorSubmit, commentEditorCancel)
-    
+            document.querySelector('.container').appendChild(emptyBlock)
+
+
             this.parentNode.parentNode.parentNode.appendChild(commentEditor)
     
             commentEditorSubmit.addEventListener('click', function () {
                 const commentContent = this.parentNode.parentNode.children[1]
                 commentContent.textContent = textArea.value
+                emptyBlock.remove()
                 commentEditor.remove()
             })
     
-            commentEditorCancel.addEventListener('click', function () {
+            emptyBlock.addEventListener('click', function () {
                 commentEditor.remove()
+                emptyBlock.remove()
             })
         })
         })
