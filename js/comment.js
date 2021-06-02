@@ -17,7 +17,6 @@ window.addEventListener('DOMContentLoaded', function () {
         return dateToString
     }
 
-
     const deleleFunction = () => {
         const deleteBtn = document.querySelectorAll('.delete-btn')
         deleteBtn.forEach(e => e.addEventListener('click', function () {
@@ -59,8 +58,6 @@ window.addEventListener('DOMContentLoaded', function () {
         })
         })
     }
-
-
 
     const newCommentInput = document.getElementById('new-comment')
     const submitComment = document.getElementById('comment-submit')
@@ -198,6 +195,14 @@ window.addEventListener('DOMContentLoaded', function () {
     submitComment.addEventListener('click', onSubmit)
     newCommentInput.addEventListener('keypress', function (event) {
         event.key === 'Enter' && onSubmit()
+    })
+
+    newCommentInput.addEventListener('click', function() {
+        if(!sessionStorage.getItem('loginInfo')){
+            alert('로그인 후 이용해주세요 ')
+            return false
+        }
+
     })
 
 
