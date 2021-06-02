@@ -1,0 +1,196 @@
+* {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Nanum Gothic';
+}
+
+button {
+    outline: none;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    color:inherit
+}
+
+section {
+    max-width: 768px;
+    margin: 0 auto;
+}
+
+.post {
+    margin-bottom: 10px;
+    padding: 30px;
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 250px;
+    color: #fff;
+    position: relative;
+}
+
+.post::after {
+    background: #000;
+    opacity: 0.6;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+.post .post-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    border-bottom: 1px solid #fff;
+    z-index: 1;
+    position: relative;
+}
+
+.post .post-info .post-date {
+    opacity: 0.8;
+    font-size: 16px;
+}
+
+.post .post-content {
+    font-size: 18px;
+    line-height: 1.5;
+    word-break: keep-all;
+    z-index: 1;
+    position: relative;
+}
+
+.post .post-btn{
+    position: absolute;
+    bottom:2em;
+    right:2em;
+    z-index: 1;
+    border:1px solid #fff;
+    padding:5px 10px
+}
+
+.comment-list {
+    padding: 10px 30px;
+}
+
+.comment-list .comment-header {
+    text-align: right;
+}
+
+.comment-list #new-comment {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    height: 50px;
+    transition: 0.5s all;
+    margin-bottom: 10px;
+}
+
+.comment-list #new-comment:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+}
+
+
+.comment-list .new-commit-btn {
+    display: flex;
+}
+
+.comment-list .new-commit-btn button {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.comment-list .new-commit-btn #comment-submit {
+    background-color: #ccc;
+    color: #fff
+}
+
+.comment-list .new-commit-btn #comment-submit.active {
+    background-color: #065fd4;
+}
+
+.comment-list .comment-row {
+    position: relative;
+    padding: 20px 0;
+    border-bottom:1px solid #eee
+}
+
+.comment-list .comment-row:first-child,
+.comment-list .comment-row:last-child{
+    border:none
+}
+
+.comment-list .comment-row .comment-info {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px
+}
+
+.comment-list .comment-row .comment-info .comment-date {
+    color: #999;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.comment-list .comment-row .comment-content {
+    padding-bottom: 20px;
+    line-height: 1.5;
+    font-size:15px
+}
+
+.comment-list .comment-row .more-btn {
+    color: #ccc;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+
+.comment-list .comment-row .commit-btn {
+    position: absolute;
+    display: block;
+    right: 1em;
+    top: 1.5em;
+    background: #fff;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0px 0px 6px 0px rgb(41 42 42 / 15%);
+}
+
+.comment-list .comment-row .commit-btn>li {
+    border-bottom: 1px solid #ccc
+}
+
+.comment-list .comment-row .commit-btn>li:last-child {
+    border: none
+}
+
+.comment-list .comment-row .commit-btn>li>button {
+    padding: 10px;
+}
+
+.comment-list .comment-row .commit-btn>li>button>i {
+    padding-right: 10px;
+    font-size: 18px;
+}
+
+.comment-list .comment-row .like-btn,
+.comment-list .comment-row .dislike-btn {
+    border: 1px solid #ccc;
+    padding: 3px 15px;
+    border-radius: 10px;
+    color:#666
+}
+
+.comment-list .comment-row .like-btn.active,
+.comment-list .comment-row .dislike-btn.active{
+    border: 2px solid #666;
+}
