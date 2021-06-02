@@ -14,12 +14,10 @@ button {
 }
 
 header{
-    position: absolute;
-    top:0;
-    right:0;
-    left:0;
-    z-index: 9999;
-}
+    max-width: 768px;
+    margin:0 auto;
+    position: relative;
+} 
 
 section {
     max-width: 768px;
@@ -31,6 +29,9 @@ section {
     display:flex;
     padding:30px;
     justify-content: flex-end;
+    position: absolute;
+    right:0;
+    z-index: 999;
 }
 
 .header-menu > li{
