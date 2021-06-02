@@ -198,3 +198,13 @@ section {
 .comment-list .comment-row .dislike-btn.active{
     border: 2px solid #666;
 }
+
+.comment-list .comment-row .comment-editor{
+    position: absolute;
+    width:100%;
+    bottom:0;
+    top:0;
+}
+.comment-list .comment-row .comment-editor textarea{
+    width: 100%;
+}
