@@ -219,12 +219,17 @@ section {
     font-size: 18px;
 }
 
+
 .comment-list .comment-row .like-btn,
 .comment-list .comment-row .dislike-btn {
     border: 1px solid #ccc;
     padding: 3px 15px;
     border-radius: 10px;
     color: #666
+}
+
+.comment-list .comment-row .like-btn{
+    margin-right:8px;
 }
 
 .comment-list .comment-row .like-btn.active,
@@ -321,6 +326,11 @@ section {
 
 .login-btns>li>.twitter-login {
     background-color: #1da1f2;
+}
+
+.login-btns>li>.github-login{
+    background-color: #aaa;
+    color:#000
 }
 
 .login img {

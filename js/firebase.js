@@ -23,6 +23,7 @@ const onLogin = (providerName) => {
 const onLogout = () => {
     sessionStorage.clear()
     firebase.auth().signOut()
+    location.href= './'
 }
 
 let userinfo;
@@ -59,7 +60,7 @@ window.addEventListener('DOMContentLoaded', function () {
 const saveComment = async(comment, userId) => {
     try{
         const response = await firebase.database()
-        .ref(`commentlist/${userId}/${comment.uploadTime}`)
+        .ref(`commentlist/${comment.uploadTime}`)
         .set(comment)
 
         return response
@@ -69,6 +70,6 @@ const saveComment = async(comment, userId) => {
     }
 }
 
-const removeComment = (uploadTime, userId) => {
-    firebase.database().ref(`commentlist/${userId}/${uploadTime}`).remove()
+const removeComment = (uploadTime) => {
+    firebase.database().ref(`commentlist/${uploadTime}`).remove()
 }

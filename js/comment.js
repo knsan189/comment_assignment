@@ -24,14 +24,20 @@ window.addEventListener('DOMContentLoaded', function () {
         return dateToString
     }
 
-    const deleleFunction = () => {
+    const deleleFunction = () => { 
         const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
         const deleteBtn = document.querySelectorAll('.delete-btn')
         deleteBtn.forEach(e => e.addEventListener('click', function () {
+            if(window.confirm('정말로 삭제하시겠습니까?')){
             const commentDate = this.parentNode.parentNode.parentNode.children[0].lastElementChild.textContent
             removeComment(commentDate, loginData.uid)
             this.parentNode.parentNode.parentNode.remove()
+            }
+            else{
+                return false
+            }
         }))
+
     }
 
     const editFunction = () => {
@@ -215,6 +221,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
             saveComment(commentData, loginData.uid)
 
+            const countComment = document.querySelector('.post-btn > span')
+            countComment.textContent++
+
         } else {
             isEmtpy()
             return false
@@ -239,7 +248,7 @@ window.addEventListener('DOMContentLoaded', function () {
     
     const syncComment = (data) => {
         const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
-        const comments = data.HYGm5ecYB6WPEIWb03RIfPP2Ibt1
+        const comments = data
         Object.keys(comments).forEach(key => creatComment(comments[key], loginData && loginData.uid))
         // comments.forEach(comment => {
         //     creatComment(comment)
@@ -368,5 +377,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
         deleleFunction()
         editFunction()
+
+        const countComment = document.querySelector('.post-btn > span')
+        countComment.textContent++
     }
 })
