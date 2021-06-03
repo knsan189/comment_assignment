@@ -34,9 +34,16 @@ section {
     z-index: 999;
 }
 
+
 .header-menu > li{
     padding-left:10px;
 }
+
+.header-menu > li > .header-login,
+.header-menu > li > .header-logout{
+    display: none;
+}
+
 .post {
     margin-bottom: 10px;
     padding: 30px;

@@ -5,12 +5,45 @@ window.addEventListener('DOMContentLoaded', function () {
     const emptyBlock = document.createElement('div')
     emptyBlock.className = 'empty-block'
 
-    const userImg = (data) => {
-        switch (data) {
-            case '네이버':
-                return './images/naver-logo.png'
-        }
+
+    const LikeFuntion = () => {
+        const likeBtn = document.querySelectorAll('.like-btn')
+
+        likeBtn.forEach(btn => {
+            btn.addEventListener('click', function () {
+
+                if (btn.classList.contains('active')) {
+                    alert('이미 좋아요를 누르셨습니다.')
+                    return false
+                }
+
+                const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
+                const commentTime = this.parentNode.children[0].lastElementChild.textContent
+                likeComment(commentTime, loginData.uid)
+            })
+        })
+
     }
+
+
+    const disLikeFuntion = () => {
+        const disLikeBtn = document.querySelectorAll('.dislike-btn')
+
+        disLikeBtn.forEach(btn => {
+            btn.addEventListener('click', function () {
+
+                if (btn.classList.contains('active')) {
+                    alert('이미 싫어요를 누르셨습니다.')
+                    return false
+                }
+
+                const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
+                const commentTime = this.parentNode.children[0].lastElementChild.textContent
+                disLikeComment(commentTime, loginData.uid)
+            })
+        })
+    }
+
 
     const isEmtpy = () => {
         alert('내용을 입력해주세요')
@@ -24,16 +57,15 @@ window.addEventListener('DOMContentLoaded', function () {
         return dateToString
     }
 
-    const deleleFunction = () => { 
+    const deleleFunction = () => {
         const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
         const deleteBtn = document.querySelectorAll('.delete-btn')
         deleteBtn.forEach(e => e.addEventListener('click', function () {
-            if(window.confirm('정말로 삭제하시겠습니까?')){
-            const commentDate = this.parentNode.parentNode.parentNode.children[0].lastElementChild.textContent
-            removeComment(commentDate, loginData.uid)
-            this.parentNode.parentNode.parentNode.remove()
-            }
-            else{
+            if (window.confirm('정말로 삭제하시겠습니까?')) {
+                const commentDate = this.parentNode.parentNode.parentNode.children[0].lastElementChild.textContent
+                removeComment(commentDate, loginData.uid)
+                this.parentNode.parentNode.parentNode.remove()
+            } else {
                 return false
             }
         }))
@@ -61,7 +93,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
                 commentEditorSubmit.addEventListener('click', function () {
                     const commentContent = this.parentNode.parentNode.children[1]
+                    const commentTime = commentContent.parentNode.children[0].lastElementChild.textContent
                     commentContent.textContent = textArea.value
+
+                    updateComment(commentTime, textArea.value)
                     emptyBlock.remove()
                     commentEditor.remove()
                 })
@@ -208,15 +243,17 @@ window.addEventListener('DOMContentLoaded', function () {
 
             deleleFunction()
             editFunction()
+            LikeFuntion()
+            disLikeFuntion()
 
             const commentData = {
                 comment: newComment,
                 uploadTime: dateString,
-                like: 0,
-                dislike: 0,
                 username: loginData.displayName,
                 userphoto: loginData.photoURL,
-                userId : loginData.uid
+                userId: loginData.uid,
+                likeUser: ['none'],
+                dislikeUser: ['none']
             }
 
             saveComment(commentData, loginData.uid)
@@ -245,18 +282,21 @@ window.addEventListener('DOMContentLoaded', function () {
         const value = snapshot.val()
         value && syncComment(value)
     })
-    
+
     const syncComment = (data) => {
         const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
         const comments = data
         Object.keys(comments).forEach(key => creatComment(comments[key], loginData && loginData.uid))
-        // comments.forEach(comment => {
-        //     creatComment(comment)
-        // })
     }
     const creatComment = (data, userId) => {
-        
-        const {dislike, like, uploadTime, username, userphoto} = data
+
+        const {
+            dislikeUser,
+            likeUser,
+            uploadTime,
+            username,
+            userphoto
+        } = data
 
         // 업로드 시간
         const date = document.createElement('div')
@@ -290,7 +330,7 @@ window.addEventListener('DOMContentLoaded', function () {
         const commitBtn = document.createElement('ul')
         commitBtn.className = 'commit-btn'
 
-        if(data.userId === userId){
+        if (data.userId === userId) {
             const faEdit = document.createElement('i')
             faEdit.className = 'far fa-edit'
 
@@ -306,15 +346,13 @@ window.addEventListener('DOMContentLoaded', function () {
             deleteBtn.className = 'delete-btn'
             deleteBtn.textContent = '삭제'
             deleteBtn.prepend(faMinus)
-        
+
             const elLi = document.createElement('li')
             elLi.appendChild(editBtn)
             const elLi2 = document.createElement('li')
             elLi2.appendChild(deleteBtn)
             commitBtn.append(elLi, elLi2)
-        }
-
-        else{
+        } else {
             const faExclam = document.createElement('i')
             faExclam.className = 'fas fa-exclamation-triangle'
 
@@ -340,13 +378,15 @@ window.addEventListener('DOMContentLoaded', function () {
 
         const likeBtn = document.createElement('button')
         likeBtn.className = 'like-btn'
-        likeBtn.textContent = like
+        likeBtn.textContent = likeUser.length - 1
         likeBtn.prepend(faThumbsUp)
+        likeUser.includes(userId) && likeBtn.classList.add('active')
 
         const dislikeBtn = document.createElement('button')
         dislikeBtn.className = 'dislike-btn'
-        dislikeBtn.textContent = dislike
+        dislikeBtn.textContent = dislikeUser.length - 1
         dislikeBtn.prepend(faThumbsDown)
+        dislikeUser.includes(userId) && dislikeBtn.classList.add('active')
 
         const comment = document.createElement('div')
         comment.classList.add('comment-row')
@@ -377,8 +417,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
         deleleFunction()
         editFunction()
+        LikeFuntion(likeUser)
+        disLikeFuntion(dislikeUser)
 
         const countComment = document.querySelector('.post-btn > span')
         countComment.textContent++
     }
+
 })

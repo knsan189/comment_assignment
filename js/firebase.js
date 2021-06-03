@@ -73,3 +73,36 @@ const saveComment = async(comment, userId) => {
 const removeComment = (uploadTime) => {
     firebase.database().ref(`commentlist/${uploadTime}`).remove()
 }
+
+const updateComment = (uploadTime, comment) => {
+    firebase.database().ref(`commentlist/${uploadTime}`).update({
+        comment : comment
+    })
+}
+
+
+const likeComment = (uploadTime, likeUser) => {
+    firebase.database().ref(`commentlist/${uploadTime}/likeUser`).get().then(snapshot => {
+        let data = []
+        if(snapshot) data = data.concat(snapshot.val())
+        data.push(likeUser)
+        firebase.database().ref(`commentlist/${uploadTime}`).update({
+            likeUser : data
+        })
+
+        location.href = './'
+    })
+}
+
+const disLikeComment = (uploadTime, dislikeUser) => {
+    firebase.database().ref(`commentlist/${uploadTime}/dislikeUser`).get().then(snapshot => {
+        let data = []
+        if(snapshot) data = data.concat(snapshot.val())
+        data.push(dislikeUser)
+        firebase.database().ref(`commentlist/${uploadTime}`).update({
+            dislikeUser : data
+        })
+
+        location.href = './'
+    })
+}
