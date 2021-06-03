@@ -20,9 +20,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // 작성일자 구하는 함수
     const dateToString = date => {
-        const temp = date
-        const dateString = temp.toISOString()
+        const dateString = date.toISOString()
         const dateToString = dateString.substring(0, 10) + " " + dateString.substring(11, 19)
+
         return dateToString
     }
 
@@ -179,8 +179,8 @@ window.addEventListener('DOMContentLoaded', function () {
             comment.append(commentInfo, content, moreBtn, commitBtn, likeBtn, dislikeBtn)
 
 
-            document.querySelector('.comment-list').appendChild(comment)
-            document.querySelector('.comment-list')
+            const secondChild = document.querySelector('.comment-list').children[1]
+            document.querySelector('.comment-list').insertBefore(comment, secondChild)
 
             // 댓글 삭제 수정 버튼 토글기능
             const moreBtns = document.querySelectorAll('.more-btn')
@@ -233,7 +233,7 @@ window.addEventListener('DOMContentLoaded', function () {
     editFunction()
 
     const ref = firebase.database().ref(`/commentlist`).ref
-    ref.on('value', snapshot => {
+    ref.once('value', snapshot => {
         const value = snapshot.val()
         value && syncComment(value)
     })
@@ -324,9 +324,8 @@ window.addEventListener('DOMContentLoaded', function () {
         comment.classList.add('comment-row')
         comment.append(commentInfo, content, moreBtn, commitBtn, likeBtn, dislikeBtn)
 
-
-        document.querySelector('.comment-list').appendChild(comment)
-        document.querySelector('.comment-list')
+        const secondChild = document.querySelector('.comment-list').children[1]
+        document.querySelector('.comment-list').insertBefore(comment, secondChild)
 
         // 댓글 삭제 수정 버튼 토글기능
         const moreBtns = document.querySelectorAll('.more-btn')

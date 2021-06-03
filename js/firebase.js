@@ -65,20 +65,8 @@ const saveComment = async(comment, userId) => {
     catch(e){
         console.log(e)
     }
-    finally{
-      alert('성공')   
-    }
 }
 
 const removeComment = (uploadTime, userId) => {
     firebase.database().ref(`commentlist/${userId}/${uploadTime}`).remove()
-}
-
-const syncComment = () => {
-    const ref = firebase.database().ref(`${userId}/${uploadTime}`).ref
-    ref.on('value', snapshot => {
-        const value = snapshot.val()
-        value && console.log(value)
-    })
-    return () => ref.off()
 }
