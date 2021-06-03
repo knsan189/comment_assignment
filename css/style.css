@@ -132,8 +132,6 @@ section {
     width:100%
 }
 
-
-
 .comment-list #new-comment {
     width: 100%;
     border: none;
@@ -387,5 +385,23 @@ section {
 @media (max-width:620px) {
     .comment-list .addform > div:last-child{
         width:80%
+    }
+}
+
+@media (min-height:1100px){
+    .editor-wrap{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .comment-list .comment-row .comment-editor{
+        position: relative;
+    }
+    .comment-list .comment-row .comment-editor .comment-editor-submit{
+        position: absolute
+    }
+    .comment-list .comment-row .comment-editor input{
+        padding:0;
     }
 }

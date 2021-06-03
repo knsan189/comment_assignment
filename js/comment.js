@@ -87,9 +87,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 commentEditorSubmit.className = 'comment-editor-submit'
                 commentEditorSubmit.appendChild(planeIcon)
 
+                const editorWrap = document.createElement('div')
+                editorWrap.className = 'editor-wrap'
+
                 commentEditor.append(textArea, commentEditorSubmit)
+                editorWrap.appendChild(commentEditor)
                 document.querySelector('.container').appendChild(emptyBlock)
-                this.parentNode.parentNode.parentNode.appendChild(commentEditor)
+                this.parentNode.parentNode.parentNode.appendChild(editorWrap)
 
                 commentEditorSubmit.addEventListener('click', function () {
                     if (textArea.value) {
@@ -106,7 +110,7 @@ window.addEventListener('DOMContentLoaded', function () {
                         return false
                     }
                 })
-                
+
                 textArea.addEventListener('keypress', function(){
                     if (textArea.value) {
                         const commentContent = this.parentNode.parentNode.children[1]
