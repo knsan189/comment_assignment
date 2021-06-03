@@ -111,6 +111,27 @@ section {
     text-align: right;
 }
 
+.comment-list .addform{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-list .addform > div:last-child{
+    width:90%;
+}
+.comment-list .comment-profile{
+    border-radius: 50%;
+    overflow: hidden;
+    width:45px;
+    height:45px;
+    border:2px solid #ccc
+}
+.comment-list .comment-profile img{
+    width:100%
+}
+
+
+
 .comment-list #new-comment {
     width: 100%;
     border: none;

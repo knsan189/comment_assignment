@@ -21,13 +21,16 @@
 </head>
 
 <body>
+
     <header>
         <ul class="header-menu">
             <li><button class="header-login">로그인</button></li>
             <li><button class="header-logout">로그아웃</button></li>
         </ul>
     </header>
+
     <section class='container'>
+
         <div class="post">
             <div class="post-header">
                 <div class="post-info">
@@ -41,15 +44,22 @@
             </div>
             <button class="post-btn"><i class="fas fa-comment"></i> <span>0</span></button>
         </div>
+
         <div class="comment-list">
-            <div class="comment-row">
-                <input name="new-comment" id="new-comment" placeholder="댓글 추가하기"></input>
-                <ul class="new-commit-btn">
-                    <li><button type="button" id="comment-submit">댓글</button></li>
-                    <li><button type="button" id="comment-cancel">취소</button></li>
-                </ul>
+            <div class="comment-row addform">
+                <div class="comment-profile">
+                    <img src="./images/unnamed.jpg" alt="사용자 프로필">
+                </div>
+                <div>
+                    <input name="new-comment" id="new-comment" placeholder="댓글 추가하기"></input>
+                    <ul class="new-commit-btn">
+                        <li><button type="button" id="comment-submit">댓글</button></li>
+                        <li><button type="button" id="comment-cancel">취소</button></li>
+                    </ul>
+                </div>
             </div>
         </div>
+
         <div class="login-box">
             <div class="login">
                 <div class="login-header">

@@ -29,12 +29,15 @@ const onLogout = () => {
 let userinfo;
 
 firebase.auth().onAuthStateChanged(function (user) {
+    const img = document.querySelector('.comment-profile > img')
     if (user) {
         document.querySelector('.header-login').style.display = 'none';
         document.querySelector('.header-logout').style.display = 'initial'
+        img.setAttribute('src', user.photoURL)
     } else {
         document.querySelector('.header-login').style.display = 'initial';
         document.querySelector('.header-logout').style.display = 'none'
+        img.setAttribute('src', './images/unnamed.jpg')
     }
 })
 

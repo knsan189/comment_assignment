@@ -261,6 +261,8 @@ window.addEventListener('DOMContentLoaded', function () {
             const countComment = document.querySelector('.post-btn > span')
             countComment.textContent++
 
+            document.getElementById('comment-submit').classList.remove('active')
+
         } else {
             isEmtpy()
             return false
@@ -422,6 +424,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
         const countComment = document.querySelector('.post-btn > span')
         countComment.textContent++
+
+
     }
 
 })
