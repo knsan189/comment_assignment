@@ -3,6 +3,7 @@
     padding: 0;
     margin: 0;
     font-family: 'Nanum Gothic';
+    vertical-align: top;
 }
 
 button {
@@ -22,6 +23,7 @@ header{
 section {
     max-width: 768px;
     margin: 0 auto;
+    position: relative;
 }
 
 .header-menu{
@@ -268,14 +270,29 @@ section {
 .comment-list .comment-row .comment-editor {
     position: fixed;
     width: 100%;
-    bottom: 0;
     right: 0;
+    left:0;
+    bottom: 0;
     z-index: 3;
-    background: #fff;
 }
 
-.comment-list .comment-row .comment-editor textarea {
-    width: 100%;
+.comment-list .comment-row .comment-editor input {
+    outline: none;
+    font-size: 18px;
+    width:100%;
+    line-height: 50px;
+    padding:0 10px;
+    border:1px solid #eee
+}
+
+.comment-list .comment-row .comment-editor .comment-editor-submit{
+    font-size: 20px;
+    border-radius: 10px;
+    color:#065fd4;
+    position: fixed;
+    bottom:0;
+    right:0;
+    padding:15px;
 }
 
 .empty-block {
@@ -364,4 +381,11 @@ section {
 .login img {
     width: 20px;
     padding-right: 15px;
+}
+
+
+@media (max-width:620px) {
+    .comment-list .addform > div:last-child{
+        width:80%
+    }
 }

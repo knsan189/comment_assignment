@@ -79,26 +79,48 @@ window.addEventListener('DOMContentLoaded', function () {
 
                 const commentEditor = document.createElement('div')
                 commentEditor.className = 'comment-editor'
-                const textArea = document.createElement('textarea')
+                const textArea = document.createElement('input')
+                textArea.placeholder = '댓글'
+                const planeIcon = document.createElement('i')
+                planeIcon.className = "fas fa-paper-plane"
                 const commentEditorSubmit = document.createElement('button')
                 commentEditorSubmit.className = 'comment-editor-submit'
-                commentEditorSubmit.textContent = '수정'
-                const commentEditorCancel = document.createElement('button')
-                commentEditorCancel.className = 'comment-editor-cancel'
-                commentEditorCancel.textContent = '취소'
+                commentEditorSubmit.appendChild(planeIcon)
 
-                commentEditor.append(textArea, commentEditorSubmit, commentEditorCancel)
+                commentEditor.append(textArea, commentEditorSubmit)
                 document.querySelector('.container').appendChild(emptyBlock)
                 this.parentNode.parentNode.parentNode.appendChild(commentEditor)
 
                 commentEditorSubmit.addEventListener('click', function () {
-                    const commentContent = this.parentNode.parentNode.children[1]
-                    const commentTime = commentContent.parentNode.children[0].lastElementChild.textContent
-                    commentContent.textContent = textArea.value
+                    if (textArea.value) {
+                        const commentContent = this.parentNode.parentNode.children[1]
+                        const commentTime = commentContent.parentNode.children[0].lastElementChild.textContent
+                        commentContent.textContent = textArea.value
 
-                    updateComment(commentTime, textArea.value)
-                    emptyBlock.remove()
-                    commentEditor.remove()
+                        updateComment(commentTime, textArea.value)
+                        emptyBlock.remove()
+                        commentEditor.remove()
+                    }
+                    else {
+                        isEmtpy()
+                        return false
+                    }
+                })
+                
+                textArea.addEventListener('keypress', function(){
+                    if (textArea.value) {
+                        const commentContent = this.parentNode.parentNode.children[1]
+                        const commentTime = commentContent.parentNode.children[0].lastElementChild.textContent
+                        commentContent.textContent = textArea.value
+
+                        updateComment(commentTime, textArea.value)
+                        emptyBlock.remove()
+                        commentEditor.remove()
+                    }
+                    else {
+                        isEmtpy()
+                        return false
+                    }
                 })
 
                 emptyBlock.addEventListener('click', function () {
@@ -333,6 +355,7 @@ window.addEventListener('DOMContentLoaded', function () {
         commitBtn.className = 'commit-btn'
 
         if (data.userId === userId) {
+
             const faEdit = document.createElement('i')
             faEdit.className = 'far fa-edit'
 
@@ -354,6 +377,7 @@ window.addEventListener('DOMContentLoaded', function () {
             const elLi2 = document.createElement('li')
             elLi2.appendChild(deleteBtn)
             commitBtn.append(elLi, elLi2)
+
         } else {
             const faExclam = document.createElement('i')
             faExclam.className = 'fas fa-exclamation-triangle'
