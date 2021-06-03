@@ -25,6 +25,8 @@ const onLogout = () => {
     firebase.auth().signOut()
 }
 
+let userinfo;
+
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         document.querySelector('.header-login').style.display = 'none';
@@ -34,6 +36,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         document.querySelector('.header-logout').style.display = 'none'
     }
 })
+
 
 window.addEventListener('DOMContentLoaded', function () {
 
@@ -50,7 +53,6 @@ window.addEventListener('DOMContentLoaded', function () {
         // ...
 
     })
-    // loginData && sessionStorage.setItem('data', JSON.stringify(loginData.user))
     
 })
 

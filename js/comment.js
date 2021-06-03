@@ -1,7 +1,5 @@
 window.addEventListener('DOMContentLoaded', function () {
 
-    const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
-
     // 금지어 목록
     const forbiddenWords = ['바보', '멍청이', '불합격', '탈락']
     const emptyBlock = document.createElement('div')
@@ -27,10 +25,10 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     const deleleFunction = () => {
+        const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
         const deleteBtn = document.querySelectorAll('.delete-btn')
         deleteBtn.forEach(e => e.addEventListener('click', function () {
             const commentDate = this.parentNode.parentNode.parentNode.children[0].lastElementChild.textContent
-            console.log(loginData)
             removeComment(commentDate, loginData.uid)
             this.parentNode.parentNode.parentNode.remove()
         }))
@@ -74,7 +72,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const submitComment = document.getElementById('comment-submit')
 
     const onSubmit = () => {
-
+        const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
         const newComment = newCommentInput.value.trim()
 
         if (newComment) {
@@ -211,7 +209,8 @@ window.addEventListener('DOMContentLoaded', function () {
                 like: 0,
                 dislike: 0,
                 username: loginData.displayName,
-                userphoto: loginData.photoURL
+                userphoto: loginData.photoURL,
+                userId : loginData.uid
             }
 
             saveComment(commentData, loginData.uid)
@@ -239,13 +238,15 @@ window.addEventListener('DOMContentLoaded', function () {
     })
     
     const syncComment = (data) => {
+        const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
         const comments = data.HYGm5ecYB6WPEIWb03RIfPP2Ibt1
-        Object.keys(comments).forEach(key => creatComment(comments[key]))
+        Object.keys(comments).forEach(key => creatComment(comments[key], loginData && loginData.uid))
         // comments.forEach(comment => {
         //     creatComment(comment)
         // })
     }
-    const creatComment = (data) => {
+    const creatComment = (data, userId) => {
+        
         const {dislike, like, uploadTime, username, userphoto} = data
 
         // 업로드 시간
@@ -276,30 +277,48 @@ window.addEventListener('DOMContentLoaded', function () {
         moreBtn.className = 'more-btn'
         moreBtn.appendChild(faEllipsis)
 
-        const faEdit = document.createElement('i')
-        faEdit.className = 'far fa-edit'
-
-        const faMinus = document.createElement('i')
-        faMinus.className = 'fas fa-minus-square'
-
-        const editBtn = document.createElement('button')
-        editBtn.className = 'edit-btn'
-        editBtn.textContent = '수정'
-        editBtn.prepend(faEdit)
-
-        const deleteBtn = document.createElement('button')
-        deleteBtn.className = 'delete-btn'
-        deleteBtn.textContent = '삭제'
-        deleteBtn.prepend(faMinus)
-
-        const elLi = document.createElement('li')
-        elLi.appendChild(editBtn)
-        const elLi2 = document.createElement('li')
-        elLi2.appendChild(deleteBtn)
 
         const commitBtn = document.createElement('ul')
         commitBtn.className = 'commit-btn'
-        commitBtn.append(elLi, elLi2)
+
+        if(data.userId === userId){
+            const faEdit = document.createElement('i')
+            faEdit.className = 'far fa-edit'
+
+            const faMinus = document.createElement('i')
+            faMinus.className = 'fas fa-minus-square'
+
+            const editBtn = document.createElement('button')
+            editBtn.className = 'edit-btn'
+            editBtn.textContent = '수정'
+            editBtn.prepend(faEdit)
+
+            const deleteBtn = document.createElement('button')
+            deleteBtn.className = 'delete-btn'
+            deleteBtn.textContent = '삭제'
+            deleteBtn.prepend(faMinus)
+        
+            const elLi = document.createElement('li')
+            elLi.appendChild(editBtn)
+            const elLi2 = document.createElement('li')
+            elLi2.appendChild(deleteBtn)
+            commitBtn.append(elLi, elLi2)
+        }
+
+        else{
+            const faExclam = document.createElement('i')
+            faExclam.className = 'fas fa-exclamation-triangle'
+
+            const declare = document.createElement('button')
+            declare.className = 'declare-btn'
+            declare.textContent = '신고하기'
+            declare.prepend(faExclam)
+
+            const elLi = document.createElement('li')
+            elLi.appendChild(declare)
+
+            commitBtn.append(elLi)
+        }
 
         const content = document.createElement('div')
         content.classList.add('comment-content')
@@ -312,12 +331,12 @@ window.addEventListener('DOMContentLoaded', function () {
 
         const likeBtn = document.createElement('button')
         likeBtn.className = 'like-btn'
-        likeBtn.textContent = '0'
+        likeBtn.textContent = like
         likeBtn.prepend(faThumbsUp)
 
         const dislikeBtn = document.createElement('button')
         dislikeBtn.className = 'dislike-btn'
-        dislikeBtn.textContent = '0'
+        dislikeBtn.textContent = dislike
         dislikeBtn.prepend(faThumbsDown)
 
         const comment = document.createElement('div')
