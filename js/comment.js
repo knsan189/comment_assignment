@@ -1,16 +1,19 @@
 window.addEventListener('DOMContentLoaded', function () {
 
+    const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
+
     // 금지어 목록
     const forbiddenWords = ['바보', '멍청이', '불합격', '탈락']
     const emptyBlock = document.createElement('div')
     emptyBlock.className = 'empty-block'
 
     const userImg = (data) => {
-        switch(data){
-            case '네이버' : return './images/naver-logo.png'
+        switch (data) {
+            case '네이버':
+                return './images/naver-logo.png'
         }
     }
-    
+
     const isEmtpy = () => {
         alert('내용을 입력해주세요')
     }
@@ -26,42 +29,44 @@ window.addEventListener('DOMContentLoaded', function () {
     const deleleFunction = () => {
         const deleteBtn = document.querySelectorAll('.delete-btn')
         deleteBtn.forEach(e => e.addEventListener('click', function () {
+            const commentDate = this.parentNode.parentNode.parentNode.children[0].lastElementChild.textContent
+
+            removeComment(commentDate, loginData.uid)
             this.parentNode.parentNode.parentNode.remove()
         }))
     }
 
     const editFunction = () => {
         const editBtn = document.querySelectorAll('.edit-btn')
-        editBtn.forEach(btn => {btn.addEventListener('click', function () {
-        
-            const commentEditor = document.createElement('div')
-            commentEditor.className = 'comment-editor'
-            const textArea = document.createElement('textarea')
-            const commentEditorSubmit = document.createElement('button')
-            commentEditorSubmit.className = 'comment-editor-submit'
-            commentEditorSubmit.textContent = '수정'
-            const commentEditorCancel = document.createElement('button')
-            commentEditorCancel.className = 'comment-editor-cancel'
-            commentEditorCancel.textContent = '취소'
-    
-            commentEditor.append(textArea, commentEditorSubmit, commentEditorCancel)
-            document.querySelector('.container').appendChild(emptyBlock)
+        editBtn.forEach(btn => {
+            btn.addEventListener('click', function () {
 
+                const commentEditor = document.createElement('div')
+                commentEditor.className = 'comment-editor'
+                const textArea = document.createElement('textarea')
+                const commentEditorSubmit = document.createElement('button')
+                commentEditorSubmit.className = 'comment-editor-submit'
+                commentEditorSubmit.textContent = '수정'
+                const commentEditorCancel = document.createElement('button')
+                commentEditorCancel.className = 'comment-editor-cancel'
+                commentEditorCancel.textContent = '취소'
 
-            this.parentNode.parentNode.parentNode.appendChild(commentEditor)
-    
-            commentEditorSubmit.addEventListener('click', function () {
-                const commentContent = this.parentNode.parentNode.children[1]
-                commentContent.textContent = textArea.value
-                emptyBlock.remove()
-                commentEditor.remove()
+                commentEditor.append(textArea, commentEditorSubmit, commentEditorCancel)
+                document.querySelector('.container').appendChild(emptyBlock)
+                this.parentNode.parentNode.parentNode.appendChild(commentEditor)
+
+                commentEditorSubmit.addEventListener('click', function () {
+                    const commentContent = this.parentNode.parentNode.children[1]
+                    commentContent.textContent = textArea.value
+                    emptyBlock.remove()
+                    commentEditor.remove()
+                })
+
+                emptyBlock.addEventListener('click', function () {
+                    commentEditor.remove()
+                    emptyBlock.remove()
+                })
             })
-    
-            emptyBlock.addEventListener('click', function () {
-                commentEditor.remove()
-                emptyBlock.remove()
-            })
-        })
         })
     }
 
@@ -104,11 +109,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
             const user = document.createElement('div')
             user.className = 'comment-username'
-            user.textContent = `${sessionStorage.getItem('loginInfo')} 유저`
-            
+            user.textContent = loginData.displayName
+
             const photoImg = document.createElement('img')
-            photoImg.src = userImg(sessionStorage.getItem('loginInfo'))
-            photoImg.alt = sessionStorage.getItem('loginInfo')
+            photoImg.src = loginData.photoURL
+            photoImg.alt = '사용자 프로필'
 
             const photo = document.createElement('div')
             photo.className = 'comment-photo'
@@ -136,7 +141,7 @@ window.addEventListener('DOMContentLoaded', function () {
             editBtn.textContent = '수정'
             editBtn.prepend(faEdit)
 
-            const deleteBtn = document.createElement('button')     
+            const deleteBtn = document.createElement('button')
             deleteBtn.className = 'delete-btn'
             deleteBtn.textContent = '삭제'
             deleteBtn.prepend(faMinus)
@@ -160,7 +165,7 @@ window.addEventListener('DOMContentLoaded', function () {
             faThumbsDown.className = 'far fa-thumbs-down'
 
             const likeBtn = document.createElement('button')
-            likeBtn.className ='like-btn'
+            likeBtn.className = 'like-btn'
             likeBtn.textContent = '0'
             likeBtn.prepend(faThumbsUp)
 
@@ -200,6 +205,17 @@ window.addEventListener('DOMContentLoaded', function () {
             deleleFunction()
             editFunction()
 
+            const commentData = {
+                comment: newComment,
+                uploadTime: dateString,
+                like: 0,
+                dislike: 0,
+                username: loginData.displayName,
+                userphoto: loginData.photoURL
+            }
+
+            saveComment(commentData, loginData.uid)
+
         } else {
             isEmtpy()
             return false
@@ -212,8 +228,127 @@ window.addEventListener('DOMContentLoaded', function () {
     newCommentInput.addEventListener('keypress', function (event) {
         event.key === 'Enter' && onSubmit()
     })
-    
+
     deleleFunction()
     editFunction()
 
+    const ref = firebase.database().ref(`/commentlist`).ref
+    ref.on('value', snapshot => {
+        const value = snapshot.val()
+        value && syncComment(value)
+    })
+    
+    const syncComment = (data) => {
+        const comments = data.HYGm5ecYB6WPEIWb03RIfPP2Ibt1
+        Object.keys(comments).forEach(key => creatComment(comments[key]))
+        // comments.forEach(comment => {
+        //     creatComment(comment)
+        // })
+    }
+    const creatComment = (data) => {
+        const {dislike, like, uploadTime, username, userphoto} = data
+
+        // 업로드 시간
+        const date = document.createElement('div')
+        date.className = 'comment-date'
+        date.textContent = uploadTime
+
+        const user = document.createElement('div')
+        user.className = 'comment-username'
+        user.textContent = username
+
+        const photoImg = document.createElement('img')
+        photoImg.src = userphoto || './images/noimage1.jpg'
+        photoImg.alt = '사용자 프로필'
+
+        const photo = document.createElement('div')
+        photo.className = 'comment-photo'
+        photo.appendChild(photoImg)
+
+        const commentInfo = document.createElement('div')
+        commentInfo.className = 'comment-info'
+        commentInfo.append(photo, user, date)
+
+        const faEllipsis = document.createElement('i')
+        faEllipsis.className = 'fas fa-ellipsis-h'
+
+        const moreBtn = document.createElement('button')
+        moreBtn.className = 'more-btn'
+        moreBtn.appendChild(faEllipsis)
+
+        const faEdit = document.createElement('i')
+        faEdit.className = 'far fa-edit'
+
+        const faMinus = document.createElement('i')
+        faMinus.className = 'fas fa-minus-square'
+
+        const editBtn = document.createElement('button')
+        editBtn.className = 'edit-btn'
+        editBtn.textContent = '수정'
+        editBtn.prepend(faEdit)
+
+        const deleteBtn = document.createElement('button')
+        deleteBtn.className = 'delete-btn'
+        deleteBtn.textContent = '삭제'
+        deleteBtn.prepend(faMinus)
+
+        const elLi = document.createElement('li')
+        elLi.appendChild(editBtn)
+        const elLi2 = document.createElement('li')
+        elLi2.appendChild(deleteBtn)
+
+        const commitBtn = document.createElement('ul')
+        commitBtn.className = 'commit-btn'
+        commitBtn.append(elLi, elLi2)
+
+        const content = document.createElement('div')
+        content.classList.add('comment-content')
+        content.textContent = data.comment
+
+        const faThumbsUp = document.createElement('i')
+        faThumbsUp.className = 'far fa-thumbs-up'
+        const faThumbsDown = document.createElement('i')
+        faThumbsDown.className = 'far fa-thumbs-down'
+
+        const likeBtn = document.createElement('button')
+        likeBtn.className = 'like-btn'
+        likeBtn.textContent = '0'
+        likeBtn.prepend(faThumbsUp)
+
+        const dislikeBtn = document.createElement('button')
+        dislikeBtn.className = 'dislike-btn'
+        dislikeBtn.textContent = '0'
+        dislikeBtn.prepend(faThumbsDown)
+
+        const comment = document.createElement('div')
+        comment.classList.add('comment-row')
+        comment.append(commentInfo, content, moreBtn, commitBtn, likeBtn, dislikeBtn)
+
+
+        document.querySelector('.comment-list').appendChild(comment)
+        document.querySelector('.comment-list')
+
+        // 댓글 삭제 수정 버튼 토글기능
+        const moreBtns = document.querySelectorAll('.more-btn')
+        const commitBtns = document.querySelectorAll('.commit-btn')
+
+        moreBtns.forEach(btn => {
+            btn.addEventListener('click', function (event) {
+                event.stopPropagation()
+                commitBtns.forEach(btn => btn.classList.remove('active'))
+
+                const commitBtn = this.nextElementSibling
+                commitBtn.classList.add('active')
+            })
+        })
+        document.addEventListener('click', function (event) {
+            commitBtns.forEach(btn => {
+                btn.classList.contains('active') && btn.classList.remove('active')
+            })
+            event.stopPropagation()
+        })
+
+        deleleFunction()
+        editFunction()
+    }
 })

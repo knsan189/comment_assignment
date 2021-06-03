@@ -5,19 +5,17 @@ window.addEventListener('DOMContentLoaded', function () {
 
     newCommentInput.addEventListener('click', function () {
 
-        if (!sessionStorage.getItem('loginInfo')) {
+        if (!JSON.parse(sessionStorage.getItem('logininfo'))) {
             alert('로그인 후 이용해주세요 ')
             loginBox.style.display = 'flex'
             return false
         }
-
     })
 
     const loginButtons = document.querySelectorAll('.login-btn')
     loginButtons.forEach(button => {
         button.addEventListener('click', function () {
-            sessionStorage.setItem('loginInfo', button.value)
-            location.href = './'
+            onLogin(button.value)
         })
     })
 
@@ -38,7 +36,6 @@ window.addEventListener('DOMContentLoaded', function () {
     })
 
     headerLogout.addEventListener('click', function(){
-        sessionStorage.removeItem('loginInfo')
-        location.href = './'
+        onLogout()
     })
 })

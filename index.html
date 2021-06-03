@@ -8,10 +8,16 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-database.js"></script>
+    <script src="./js/firebase.js"></script>
     <script src="./js/comment.js" type="text/javascript"></script>
     <script src="./js/style.js" type="text/javascript"></script>
     <script src="./js/login.js" type="text/javascript"></script>
-    <title>아이폰 12 PRO MAX</title>
+    
+    <title>아이폰 12 PRO MAX - Jonathan lve</title>
+
 </head>
 
 <body>
@@ -58,8 +64,7 @@
                     <li><button class="edit-btn"><i class="far fa-edit"></i>수정</button></li>
                     <li><button class="delete-btn"><i class="fas fa-minus-square"></i>삭제</button></li>
                 </ul>
-                <button class="like-btn"><i class="far fa-thumbs-up"></i>1</button>
-                <button class="dislike-btn"><i class="far fa-thumbs-down"></i>0</button>
+                <button class="like-btn"><i class="far fa-thumbs-up"></i>1</button><button class="dislike-btn"><i class="far fa-thumbs-down"></i>0</button>
             </div>
             <div class="comment-row">
                 <div class="comment-info">
@@ -73,8 +78,7 @@
                     <li><button class="edit-btn"><i class="far fa-edit"></i>수정</button></li>
                     <li><button class="delete-btn"><i class="fas fa-minus-square"></i>삭제</button></li>
                 </ul>
-                <button class="like-btn"><i class="far fa-thumbs-up"></i>1</button>
-                <button class="dislike-btn"><i class="far fa-thumbs-down"></i>0</button>
+                <button class="like-btn"><i class="far fa-thumbs-up"></i>1</button><button class="dislike-btn"><i class="far fa-thumbs-down"></i>0</button>
             </div>
         </div>
         <div class="login-box">
@@ -84,27 +88,17 @@
                 </div>
                 <ul class="login-btns">
                     <li>
-                        <button class="naver-login login-btn" value="네이버">
-                            <img src="./images/naver-logo.png" alt="네이버 로고"> 네이버로 로그인
-                        </button>
-                    </li>
-                    <li>
-                        <button class="kakao-login login-btn" value="카카오">
-                            <img src="./images/kakao-logo.png" alt="로고">카카오톡으로 로그인
-                        </button>
-                    </li>
-                    <li>
-                        <button class="facebook-login login-btn" value="페이스북">
+                        <button class="facebook-login login-btn" value="Facebook">
                             <img src="./images/facebook-logo.png" alt="로고">페이스북으로 로그인
                         </button>
                     </li>
                     <li>
-                        <button class="google-login login-btn" value="구글">
+                        <button class="google-login login-btn" value="Google">
                             <img src="./images/google-logo.png" alt="로고">구글로 로그인
                         </button>
                     </li>
                     <li>
-                        <button class="twitter-login login-btn" value="트위터">
+                        <button class="twitter-login login-btn" value="Twitter">
                             <img src="./images/twitter-logo.png" alt="로고">트위터로 로그인
                         </button>
                     </li>
