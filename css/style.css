@@ -324,6 +324,7 @@ section {
     padding: 15px;
     width: 70%;
     border-radius: 15px;
+    position: relative;
 }
 
 .login .login-header {
@@ -381,6 +382,14 @@ section {
     padding-right: 15px;
 }
 
+.login .close-btn{
+    position: absolute;
+    top:1em;
+    right:1em;
+    background: transparent;
+    color:#1877f2;
+    font-size:24px;
+}
 
 @media (max-width:620px) {
     .comment-list .addform > div:last-child{

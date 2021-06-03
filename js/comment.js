@@ -102,7 +102,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
                         updateComment(commentTime, textArea.value)
                         emptyBlock.remove()
-                        commentEditor.remove()
+                        editorWrap.remove()
                     } else {
                         isEmtpy()
                         return false
@@ -128,7 +128,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
                 emptyBlock.addEventListener('click', function () {
                     commentEditor.remove()
-                    emptyBlock.remove()
+                    editorWrap.remove()
                 })
             })
         })

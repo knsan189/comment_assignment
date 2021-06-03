@@ -2,6 +2,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const newCommentInput = document.getElementById('new-comment')
     const loginBox = document.querySelector('.login-box')
+    const closeBtn = document.querySelector('.close-btn')
 
     newCommentInput.addEventListener('click', function () {
 
@@ -17,6 +18,10 @@ window.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             onLogin(button.value)
         })
+    })
+
+    closeBtn.addEventListener('click', function(){
+        loginBox.style.display = 'none'
     })
 
     const headerLogin = document.querySelector('.header-login')
