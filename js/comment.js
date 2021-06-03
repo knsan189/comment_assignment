@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', function () {
         const deleteBtn = document.querySelectorAll('.delete-btn')
         deleteBtn.forEach(e => e.addEventListener('click', function () {
             const commentDate = this.parentNode.parentNode.parentNode.children[0].lastElementChild.textContent
-
+            console.log(loginData)
             removeComment(commentDate, loginData.uid)
             this.parentNode.parentNode.parentNode.remove()
         }))
