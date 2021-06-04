@@ -44,20 +44,25 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 window.addEventListener('DOMContentLoaded', function () {
 
-    // const loginData = []
+    const loadingSpinner = document.querySelector('.loading')
 
-    firebase.auth().getRedirectResult().then(result => result.user && sessionStorage.setItem('logininfo', JSON.stringify(result.user))).catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+    async function logined() {
+        try{
+            loadingSpinner.style.display = 'flex'
+            const response = await firebase.auth().getRedirectResult()
+            return response
+        }
+        catch(e){
 
-    })
+        }
+        finally{
+            loadingSpinner.style.display = 'none'
+        }
     
+        
+    }
+
+    logined().then(result => result.user && sessionStorage.setItem('logininfo', JSON.stringify(result.user)))
 })
 
 const saveComment = async(comment, userId) => {
