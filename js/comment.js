@@ -5,19 +5,28 @@ window.addEventListener('DOMContentLoaded', function () {
     const emptyBlock = document.createElement('div')
     emptyBlock.className = 'empty-block'
 
-
+    
     const LikeFuntion = () => {
         const likeBtn = document.querySelectorAll('.like-btn')
 
         likeBtn.forEach(btn => {
             btn.addEventListener('click', function () {
 
+                const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
+                
+                if(!loginData){
+                    alert('좋아요는 로그인 후 이용해주세요')
+                    const loginBox = document.querySelector('.login-box')
+                    loginBox.style.display = 'flex'
+                    return false
+                }
+
                 if (btn.classList.contains('active')) {
                     alert('이미 좋아요를 누르셨습니다.')
                     return false
                 }
 
-                const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
+                
                 const commentTime = this.parentNode.children[0].lastElementChild.textContent
                 likeComment(commentTime, loginData.uid)
             })
@@ -32,12 +41,20 @@ window.addEventListener('DOMContentLoaded', function () {
         disLikeBtn.forEach(btn => {
             btn.addEventListener('click', function () {
 
+                const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
+
+                if(!loginData){
+                    alert('싫어요는 로그인 후 이용해주세요')
+                    const loginBox = document.querySelector('.login-box')
+                    loginBox.style.display = 'flex'
+                    return false
+                }
+
                 if (btn.classList.contains('active')) {
                     alert('이미 싫어요를 누르셨습니다.')
                     return false
                 }
 
-                const loginData = JSON.parse(sessionStorage.getItem('logininfo'))
                 const commentTime = this.parentNode.children[0].lastElementChild.textContent
                 disLikeComment(commentTime, loginData.uid)
             })
@@ -53,19 +70,14 @@ window.addEventListener('DOMContentLoaded', function () {
     const dateToString = date => {
 
         const year = date.getFullYear().toString();
-
         let month = date.getMonth() + 1;
         month = month < 10 ? '0' + month.toString() : month.toString();
-
         let day = date.getDate();
         day = day < 10 ? '0' + day.toString() : day.toString();
-
         let hour = date.getHours();
         hour = hour < 10 ? '0' + hour.toString() : hour.toString();
-
         let minites = date.getMinutes();
         minites = minites < 10 ? '0' + minites.toString() : minites.toString();
-
         let seconds = date.getSeconds();
         seconds = seconds < 10 ? '0' + seconds.toString() : seconds.toString();
 
@@ -126,12 +138,12 @@ window.addEventListener('DOMContentLoaded', function () {
                 })
 
                 textArea.addEventListener('keypress', function (event) {
-                    if(event.key === 'Enter'){
+                    if (event.key === 'Enter') {
                         if (textArea.value) {
                             const commentContent = this.parentNode.parentNode.parentNode.children[1]
                             const commentTime = commentContent.parentNode.children[0].lastElementChild.textContent
                             commentContent.textContent = textArea.value
-    
+
                             updateComment(commentTime, textArea.value)
                             emptyBlock.remove()
                             commentEditor.remove()
